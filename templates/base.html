@@ -1,0 +1,93 @@
+{% load staticfiles %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EventsAhead</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+  {% block styling %}
+  {% endblock %}
+
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="{% static 'custombase.css' %}" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+  <style>
+    body {
+    padding-top: 50px;
+    }
+  </style>
+</head>
+
+<body>
+<!-- <nav class="navbar navbar-inverse navbar-fixed-top"> -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	  </button>
+      <a class="navbar-brand" href="{% url 'home' %}">Events Ahead</a>
+    </div>
+	<div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span></a></li> <!-- HOME -->
+                {% if user.is_authenticated %}
+        <li><a href="{% url 'saveEvents:userSavedEvents' %}">Saved Events</a></li>
+        <li><a href="{% url 'Event_list'%}">Manage Events</a></li> 
+        <!--<li><a href="#">Default</a></li>--> 
+                {% endif %}
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'edit_user' pk=user.pk %}"><span class="glyphicon glyphicon-user"></span> {{request.user.first_name }}'s Profile</a></li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'logout' %}">Sign Out</a></li>
+        {% else %}
+        <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign up!</a></li>
+        <li class="dropdown">
+        	<a class="dropdown-toggle" data-toggle="dropdown" href="login/">Sign in
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><label>Log in</label></li>
+      {% block logincheck %}
+      {% endblock %}
+      <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+     {% csrf_token %}
+     {{ login_form|crispy }}
+      <div> <button class="btn btn-sm btn-primary" type="submit">Sign in</button> </div>
+      </form>
+      <li><label>or</label></li>
+      <ul class="socialaccount_providers">
+      <li>
+        <a title="Google" class="socialaccount_provider google" 
+           href="/accounts/google/login/?process=login">Google</a>
+      </li>
+
+
+      <li>
+        <a title="Facebook" class="socialaccount_provider facebook" 
+           href="/accounts/facebook/login/?process=login">Facebook</a>
+      </li>
+    </ul> 
+
+                </ul>
+        </li>
+    {% endif %}
+      </ul>
+  </div> <!-- end nav collapse -->
+  </div> <!-- end container fluid -->
+</nav>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

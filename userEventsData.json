@@ -1,0 +1,113 @@
+[
+    {
+        "model": "userCreateEvents.CustomEvent",
+        "pk":1,
+        "fields":{ 
+            "title": "Rick Ross Da BAUSS's House Partay",
+            "performers": "Rick Ross",
+            "description": "La Di Da Di, we likes to party / We don't cause trouble, we don't bother nobody",
+            "searchtags": "Rick Ross Da BAUSS's House Partay Vancouver,CA Rogers Arena",
+            "venue_name": "Rogers Arena",
+            "country_name": "CA",
+            "city_name": "Vancouver",
+            "latitude": "49.2",
+            "longitude": "-123.5",
+            "region_name": "BC",
+            "address":"1234 fast lane",
+            "isAuthenticated": "True",
+            "start_time": "2016-03-27 02:59:30",
+            "stop_time": "2016-03-27 02:59:30",
+            "created_time": "2016-03-27 02:59:30",
+            "last_modified": "2016-03-27 02:59:30"
+            }
+    },
+    {
+        "model": "userCreateEvents.CustomEvent",
+        "pk":2,
+        "fields":{ 
+            "title": "Lodi Dodi: We Likes to Party",
+            "performers": "Snoop Dogg",
+            "description": "Pa-a-a-a-a-a-arty",
+            "searchtags": "Lodi Dodi: We Likes to Party Snoop Dogg Vancouver,CA Venue",
+            "venue_name": "Venue",
+            "country_name": "CA",
+            "city_name": "Vancouver",
+            "latitude": "49.1",
+            "longitude": "-123.5",
+            "region_name": "BC",
+            "address":"1234 fast lane",
+            "isAuthenticated": "True",
+            "start_time": "2016-03-27 02:59:30",
+            "stop_time": "2016-03-27 02:59:30",
+            "created_time": "2016-03-27 02:59:30",
+            "last_modified": "2016-03-27 02:59:30"
+            }
+    },
+    {
+        "model": "userCreateEvents.CustomEvent",
+        "pk":3,
+        "fields":{ 
+            "title": "Dr. Dre's Up In Smoke Pt. 3 Tour",
+            "performers": "Dr. Dre and Eminem",
+            "description": "Nowadays everybody wanna talk like they got something to say / But nothing comes out when they move their lips / Just a bunch of gibberish",
+            "searchtags": "Dr. Dre's Up In Smoke Pt. 3 Tour Dr. Dre and Eminem Calgary,CA Arts Commons",
+            "venue_name": "Arts Commons",
+            "country_name": "CA",
+            "city_name": "Calgary",
+            "region_name": "AB",
+            "latitude": "51.1",
+            "longitude": "-114.5",
+            "address":"1234 fast lane",
+            "isAuthenticated": "True",
+            "start_time": "2016-03-27 02:59:30",
+            "stop_time": "2016-03-27 02:59:30",
+            "created_time": "2016-03-27 02:59:30",
+            "last_modified": "2016-03-27 02:59:30"
+            }
+    },
+    {
+        "model": "userCreateEvents.CustomEvent",
+        "pk":4,
+        "fields":{ 
+            "title": "Sausage Party Movie Primere Party",
+            "performers": "Seth Rogan",
+            "description": "Seth Rogan stars in this movie.",
+            "searchtags": "Sausage Party Movie Primere Party Seth Rogan Calgary,CA Bella Concert Hall",
+            "venue_name": "Bella Concert Hall",
+            "country_name": "CA",
+            "city_name": "Calgary",
+            "region_name": "AB",
+            "address":"1234 fast lane",
+            "latitude": "51.0",
+            "longitude": "-114.5",
+            "isAuthenticated": "True",
+            "start_time": "2016-03-27 02:59:30",
+            "stop_time": "2016-03-27 02:59:30",
+            "created_time": "2016-03-27 02:59:30",
+            "last_modified": "2016-03-27 02:59:30"
+            }
+    },
+    {
+        "model": "userCreateEvents.CustomEvent",
+        "pk":5,
+        "fields":{ 
+            "title": "House Party",
+            "performers": "Armin Van Burren",
+            "description": "Trance",
+            "venue_name": "Arcadia Bar",
+            "searchtags": "House Party Armin Van Burren Arcadia Bar Edmonton,CA",
+            "country_name": "CA",
+            "city_name": "Edmonton",
+            "latitude": "53.5",
+            "longitude": "-113.4",
+            "region_name": "BC",
+            "address":"1234 fast lane",
+            "isAuthenticated": "True",
+            "start_time": "2016-03-27 02:59:30",
+            "stop_time": "2016-03-27 02:59:30",
+            "created_time": "2016-03-27 02:59:30",
+            "last_modified": "2016-03-27 02:59:30"
+            }
+    }
+
+]

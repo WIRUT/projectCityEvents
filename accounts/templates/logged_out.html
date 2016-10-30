@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Logged out </h1>
+
+<p> You have now successfully Logged out. </p>
+<p> Redirecting back to main page... </p>
+
+<script>
+// script redirects you back to the main page in 2 seconds
+    function redirect(){
+       window.location.href = "/";
+    }
+    setTimeout(redirect, 2000); 
+</script>
+
+
+{% endblock %}

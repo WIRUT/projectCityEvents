@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Event Submitted! </h1>
+
+<p> Thank you for your submission! Our staff will review your event within 24 hours before posting it up live!  </p>
+<p> Redirecting you to manage events... </p>
+
+<script>
+// script redirects you back to the main page in 2 seconds
+    function redirect(){
+       window.location.href = "/manageevents";
+    }
+    setTimeout(redirect, 2000); 
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,9 @@
+db.sqlite3
+*.pyc
+*.orig
+*/migrations/
+*.swp
+*.swo
+*~
+*.vagrant
+*/media/

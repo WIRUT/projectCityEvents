@@ -1,0 +1,51 @@
+/* These 2 packages, GeoLite2-City.mmdb and GeoLite2-Country are needed for the */
+/* GeoIP2 package. */
+/*  */
+/* Below is a snippet of how to use the GeoIP2 package. */
+/* More info can be found: https://pypi.python.org/pypi/geoip2 */
+
+import geoip2.database
+>>>
+>>> # This creates a Reader object. You should use the same object
+>>> # across multiple requests as creation of it is expensive.
+>>> reader = geoip2.database.Reader('/path/to/GeoLite2-City.mmdb')
+>>>
+>>> # Replace "city" with the method corresponding to the database
+>>> # that you are using, e.g., "country".
+>>> response = reader.city('128.101.101.101')
+>>>
+>>> response.country.iso_code
+'US'
+>>> response.country.name
+'United States'
+>>> response.country.names['zh-CN']
+u'美国'
+>>>
+>>> response.subdivisions.most_specific.name
+'Minnesota'
+>>> response.subdivisions.most_specific.iso_code
+'MN'
+>>>
+>>> response.city.name
+'Minneapolis'
+>>>
+>>> response.postal.code
+'55455'
+>>>
+>>> response.location.latitude
+44.9733
+>>> response.location.longitude
+-93.2323
+>>> reader.close()
+
+
+------------------------------------------------------------------------------
+http://github.com/un33k/django-ipware
+/* To use IPware follow template below: */
+
+from ipware.ip import get_ip
+    ip = get_ip(request)
+    if ip is not None:
+       # we have an ip address for user
+    else:
+       # we don't have an ip address for user

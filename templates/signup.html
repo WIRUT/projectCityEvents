@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 text">
+            <h1>Welcome to Events Around!</h1>
+            <div class="description">
+            	<p>
+                	 By Creating a new account, you can save, edit and bookmark all your favorate events around your area! 
+            	</p>
+                {% if form.errors %}
+    <!-- Error messaging -->
+    <div id="errors">
+        <div class="inner">
+            <p>There were some errors in the information you entered. Please correct the following:</p>
+            {{ form.non_field_errors }}
+            <ul>
+                {% for field in form %}
+                    {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <!-- /Error messaging -->
+{% endif %}
+            </div>
+        </div>
+        <div class="col-sm-6 form-box">
+        	<div class="form-top">
+        		<div class="form-top-left">
+        			<h3>Sign up now</h3>
+            		<p>Fill in the form below:</p>
+        		</div>
+        		<div class="form-top-right">
+        			<i class="fa fa-pencil"></i>
+        		</div>
+            </div>
+            <div class="form-bottom">
+                <form role="form" action="" method="post" class="registration-form">
+                 {% csrf_token %}
+                    <div class="form-group">
+                        <label for="form-first-name">First Name</label>
+                        <p> {{ form.first_name }}</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-first-name">Username</label>
+                        <p> {{ form.username }}</p>
+                    </div>
+                    <div class="form-group">
+                    	<label  for="form-password1">Password</label>
+                    	<p> {{ form.password1 }} </p>
+                    </div>
+                    <div class="form-group">
+                    	<label for="form-password2">Confirm Password </label>
+                    	<p> {{ form.password2 }}</p>
+                    </div>
+                    <button type="submit" class="btn">Sign me up!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

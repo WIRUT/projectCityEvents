@@ -1,0 +1,42 @@
+{% extends 'dashboard/map.html' %}
+
+{% block content %}
+{% if form.errors %}
+<p>Please try again.</p>
+{% endif %}
+
+<form method="post" action=".">
+{% csrf_token %}
+<table>
+<tr>
+    <td><label>Message: <input type="text" name="message_text" id="message_text" value="{{message_text}}"> </label></td>
+    <td><input type="hidden" name="longitude" id="longitude" value="{{longitude}}"></td>
+    <td><input type="hidden" name="latitude" id="latitude" value="{{latitude}}"></td>
+    <td><input onclick="setCoordinates()" type="submit" value="Submit" /> </td>
+</tr>
+</table>
+
+</form>
+<script type="text/javascript">
+      function addDBmessages(map) {
+      var messageText;
+      var currLat;
+      var currLong;
+      var messageBubble;
+
+      {% for message in messages %}
+          messageText = '<strong>' + '{{message.message_text}}' + '</strong>';
+          currLat = "{{message.latitude}}";
+          currLong = "{{message.longitude}}";
+          var myLatLng = new google.maps.LatLng(currLat,currLong);
+
+          messageBubble= new google.maps.InfoWindow({
+            position: myLatLng,
+            content: messageText,
+            map: map
+          });
+      {% endfor %}
+      }
+</script>
+
+{% endblock %}

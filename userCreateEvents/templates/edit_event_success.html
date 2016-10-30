@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Event Saved! </h1>
+
+<p> Redirecting you to manage events... </p>
+
+<script>
+// script redirects you back to the main page in 2 seconds
+    function redirect(){
+       window.location.href = "/manageevents";
+    }
+    setTimeout(redirect, 2000); 
+</script>
+
+
+{% endblock %}

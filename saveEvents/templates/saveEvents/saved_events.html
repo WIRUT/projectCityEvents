@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'saveEvents/style.css' %}" />
+
+<div class="container">
+<h1>My Saved Events</h1>
+
+
+<div id="results">
+{% for event in events %}
+<div class="eventInfo">
+{% for image in event.event.image_set.all %}
+{% if image %}
+<img src="{{image.url_med}}" width="{{image.width_med}}" height="{{image.height_med}}" class="eventImage"/>
+{% else %}
+<img src="http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder.png" width="130px" height="130px" class="eventImage"/>
+{% endif %}
+{% endfor %}
+<div class="resultsText">
+<h5><strong>{{ event.event.title }}</strong></h5>
+{% if event.event.performers.all %}
+<p> Artists: <br>    
+{% endif %}
+{% for performer in event.event.performers.all %}
+{% if forloop.counter > 1 %}, {% endif %}{{ performer.name }}
+{% endfor %}
+{% if event.performers.all %}
+</p>
+{% endif %}
+{% for venue in event.event.venue_set.all %}
+<p> Venue: <br>
+    {{ venue.name }}</p>
+{% endfor %}
+{% if event.event.city_name %}
+<p> Location: <br>
+{{ event.event.city_name }}, {{event.event.region_abbr}}, {{event.event.country_abbr}}</p>
+{% endif %}
+<p> Date: <br>
+    {{ event.event.start_time }}{% if event.event.stop_time and event.event.stop_time not in event.event.start_time %} - {{event.event.stop_time}}{% endif %}</p>
+<p><a href="{% url 'EventDetails:eventdetails' event.event.pk %}">More Info</a></p>
+</div>
+<div class="form">
+	<ul id="buttonlist">
+		<li class="buttonelement">
+			<form action="{% url 'saveEvents:deleteEvent' event.pk %}" method="post">
+				{% csrf_token %}
+				<input type="submit" class="btn btn-danger" value="REMOVE THIS EVENT" />
+			</form>
+		</li>
+	</ul>
+</div>
+</div>
+{% endfor %}
+{% if not events %}
+<div class="eventInfo">
+<div class="resultsText">
+<p>You have no saved events</p>
+</div>
+</div>
+{% endif %}
+</div>
+</div>
+{% endblock %}

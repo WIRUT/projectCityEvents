@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block styling %}
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+
+{% endblock %}
+{% block content %}
+    <div class="container">
+    	<div class="row">
+    		<div class="col-md-4 col-md-offset-4 centered">
+	        <h2 class="form-signin-heading">Please sign in</h2>
+    		<a href="/accounts/facebook/login/?process=login"> <button class="btn btn-md btn-primary btn-block"> Login/Signup with Facebook </button> </a>
+			<a href="/accounts/google/login/?process=login"> <button class ="btn btn-md btn-success btn-block"> Login/Signup with Google </button> </a>
+	      <form class="form-signin" method="post" action="{% url 'login' %}">
+	      {% csrf_token %}
+			{{ form|crispy }}
+			<div> <button class="btn btn-lg btn-info btn-block" type="submit">Sign in</button> </div>
+	      </form>
+	      </div>
+        </div>
+    </div> <!-- /container -->
+{% endblock %}
+

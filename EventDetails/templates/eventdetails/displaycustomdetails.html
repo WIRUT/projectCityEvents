@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load displaydetails_extras %}
+{% getRecentEvents as recents %}
+{% load staticfiles %}
+
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'EventDetails/eventdetailstyle.css' %}"/>
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+	<!-- the following js script stops the carousel from auto-sliding -->
+	<script src="{% static 'EventDetails/eventdetailscript.js' %}"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeCn6fLBBK7fFtvfY94UkOtgh73jBnS8o"></script>
+</head>
+
+<h1 class="titlebar">
+		{{event.title}} at {{event.venue_name}}
+</h1>
+
+<!--
+- THROW IN SOME DEFAULT IMGS OR W.E. IF EMPTY
+-->
+
+<!-- For Image Display: -->
+<div class="row">
+<!--<div class="col-md-4">-->
+	<div class="w3-third">
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+			</ol>
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					{% if event.event_photo %}
+						<img src="{{ event.event_photo }}" 
+							alt="{{event.title}}image" >
+					{% else %}
+						<img src="{% static 'EventDetails/defaultvenueimage.png' %}" alt="default event image"> <!-- doesnt work -->
+					{% endif %}
+				</div>
+	
+			<!-- #######venue images doesn't exist yet####### -->
+			{% for v in event.venue_set.all %}
+				{% for imgobject in v.all %}
+					{% if imgobject.imageurl %}
+						<div class="item">
+							<img src="{{ imgobject.imageurl }}"
+								alt="{{event.title}}venueimage" 
+								width="{{ imgobject.width_med }}" 
+								height="{{ imgobject.height_med }}">
+						</div>
+					{% else %}
+						<!-- nothing -->
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+			</div>
+		
+			<!-- Left and right controls -->
+			<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div> <!-- end my carousel -->
+	</div> <!-- end imagegallery div -->
+
+	<!-- For Detail Display: -->
+	<div class="w3-twothird">
+		<div class="panel panel-default">
+			<div class="panel-heading">Event Details:</div>
+			<div class="panel-body">
+				<ul class="detailsbar-vertical">
+					<li><strong>Performers: </strong>{{ event.performers }}</li>
+					<li><p></p></li> <!-- give space -->
+				
+					<li><strong>Event Owner:</strong> {{event.owner}}</li>
+					<li><p></p></li>
+					
+					<li><strong>Address:</strong>{{ event.address }}</li>
+					<li><p></p></li>
+				
+					<li><strong>Event Starts:</strong> {{event.start_time}}</li>
+					<li><p></p></li>		
+				
+					<li><strong>Event Ends:</strong> {{event.stop_time}}</li>
+					<li><p></p></li>
+				
+					<li>
+						<strong>Price:</strong>
+						{% if event.price == 0 %}
+							$0
+						{% else %}
+							${{event.price}}
+						{% endif %}
+					</li>
+					<li><p></p></li>
+				
+					<li>
+						{% if event.ticket_url %}
+							<a href="{{event.ticket_url}}"> Click to get tickets for this event!</a>
+						{% else %}
+						{% endif %}
+					</li> 
+					<li><p></p></li>
+	
+					<li> 
+						{% if messages %}
+							<ul class="messages">
+								{% for message in messages %}
+									<li {% if message.tags %} class="{{message.tags}}" {% endif %}> 
+										{{message}} 
+									</li>
+								{% endfor %}
+							</ul>
+						{% endif %} 
+					</li>
+	
+					<li> <strong>Who's Going:</strong>
+						<ul id="listofpeople"> 
+							{% for person in event.rsvpcustomlist_set.all %}
+								<li class="person">{{person.user}}, </li>
+							{% endfor %}
+						</ul>
+					</li>
+	
+					<li> <strong>Upvotes:</strong> {{ event.votecustomlist_set.count }} </li>
+					<li>
+						{% if user.is_authenticated %}
+						<div class="form">
+							<ul id="buttonlist">
+							
+								<!-- HOPEFULLY EVENT.PK IS THE TITLE -->
+							
+								<!-- RSVP -->
+								<li class="buttonelement">
+									<form action="{% url 'EventDetails:customrsvp' event.pk %}" method="post">
+									{% csrf_token %}
+										<input type="submit" class="btn btn-primary" value="RSVP" />
+									</form>
+									<p> </p>
+								</li>
+								<!-- VOTE -->
+								<li class="buttonelement">
+									<form action="{% url 'EventDetails:customvote' event.pk %}" method="post">
+										{% csrf_token %}
+										<input type="submit" class="btn btn-primary" value="VOTE" />
+									</form>
+								</li>
+							</ul>
+						</div>
+						{% else %}
+						{% endif %}
+					</li>
+				</ul> <!-- end details bar vertical -->
+			</div> <!-- end panel-body -->
+		</div> <!-- end panel -->
+	</div> <!-- end details pane -->
+<!-- </div> <!-- end col-md-4 --> <!-- this div forces img gallery & details to always stack -->
+</div> <!-- end row (details & gallery)-->
+
+
+<p></p>
+
+<div class="row">
+<div class = "col-md-12 centered">
+	<div class="panel panel-default">
+		<div class="panel-heading">	Description:</div>
+		<div class="panel-body">
+			<ul class="detailsbar-vertical">
+				<li>
+					{{event.description | safe}} - <em>last modified on: {{event.last_modified}}</em>
+				</li>
+			</ul>
+		{% if event.spotifyURL %}
+		<iframe src='{{ event.spotifyURL }}' width="300" height="380" frameborder="0" allowtransparency="true"></iframe>	
+		{% endif %}
+		</div>
+	</div>
+</div>
+</div>
+
+<!-- For Map Display: -->
+<!-- Reference: https://developers.google.com/maps/documentation/javascript/examples/marker-simple 
+-->
+<div class = "col-md-8">
+<div class="panel panel-default">
+	<div class="panel-heading">	Location:</div>
+	<div class="panel-body">
+		{% load l10n %}
+		{% localize off %}
+		<script type="text/javascript">
+			//make sure the document runs first
+			$(document).ready(function(event) {
+				initMap();
+			});
+			function initMap() {
+				var place_lat = 0;
+				var place_lng = 0;
+				//changed cuz no longer a detailview
+				place_lat = {{ event.latitude }}
+				place_lng = {{ event.longitude }}
+				
+				var event_location = new google.maps.LatLng(place_lat, place_lng)
+				var map = new google.maps.Map(document.getElementById('map'), {
+					zoom: 17,
+					center: event_location
+				});
+				var marker = new google.maps.Marker({
+					position: event_location,
+					map: map
+				});
+			}
+		</script>
+		{% endlocalize %}
+		<div id="map"></div>
+	</div> <!-- end panel body -->
+</div>
+</div>
+
+<!-- For Recommended Events (formerly Instances) -->
+<div class="row">
+	<div class="panel panel-default">
+		<div class="panel-heading">	Recommended Events:</div>
+		<div class="panel-body">
+			<ul class="recommended-bar">
+				{% for e in recents %}
+					<li> 
+						<p>
+						{% for imgobject in e.image_set.all %}
+							{% if imgobject %}
+								<img src="{{ imgobject.url_lg }}" 
+									alt="{{event.title}}image" 
+									width="{{ imgobject.width_med }}" 
+									height="{{ imgobject.height_med }}">
+							{% endif %}
+						{% endfor %}
+						</p>
+						<p>
+						{% if e.eventID %}
+							<a href="{% url 'EventDetails:eventdetails' e.pk %}"> {{e.title}} </a>
+						{% else %}
+							<a href="{% url 'EventDetails:customeventdetails' e.pk %}"> {{e.title}} </a>
+						{% endif %}
+						</p>
+					</li>
+				{% empty %}
+					<li> No recent events </li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

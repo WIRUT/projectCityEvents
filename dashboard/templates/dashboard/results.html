@@ -1,0 +1,89 @@
+{% extends 'dashboard/map.html' %}
+
+{% block results %}
+
+<div id="results">
+
+{% for event in events %} 
+<div class="eventInfo">
+{% for image in event.image_set.all %}
+{% if image %}
+<img src="{{image.url_med}}" width="{{image.width_med}}" height="{{image.height_med}}" class="eventImage"/>
+{% else %}
+<img src="http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder.png" width="130px" height="130px" class="eventImage"/>
+{% endif %}
+{% endfor %}
+{% if event.eventphoto %}
+<img src="../../media/{{event.eventphoto}}" width=130px height=130px class="eventImage"/>
+{% elif not event.eventphoto and not event.image_set.all %}
+<img src="http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder.png" width="130px" height="130px" class="eventImage"/>
+{% endif %}
+
+
+<div class="resultsText">
+<h5><strong>{{ event.title }}</strong></h5>
+{% if event.performers.all %}
+<p> Artists: <br>
+{% endif %}
+{% for performer in event.performers.all %}
+{% if forloop.counter > 1 %}, {% endif %}{{ performer.name }}
+{% endfor %}
+{% if event.performers.all %}
+</p>
+{% endif %}
+{% if event.performers not in "None" %}
+<p> Artists: <br>
+{{ event.performers }}
+</p>
+{% endif %}
+{% if event.venue %}
+<p> Venue: <br>
+{{ event.venue }}</p>
+{% elif event.venue_name %}
+<p> Venue: <br>
+{{ event.venue_name }}</p>
+{% endif %}
+{% if event.city_name %}
+<p> Location: <br>
+{{ event.city_name }}, 
+{% endif %}
+{% if event.country_abbr %}
+{{ event.region_abbr }}, {{ event.country_abbr }}</p>
+{% elif event.venue_name %}
+{{ event.region_name }}, {{ event.country_name }}</p>
+{% endif %}
+<p> Date: <br>
+    {{ event.start_time }}{% if event.stop_time and event.stop_time not in event.start_time %} - {{event.stop_time}}{% endif %}</p>
+{% if event.eventID %}
+<p><a href="{% url 'EventDetails:eventdetails' event.pk %}">More Info</a></p>
+{% else %}
+<p><a href="{% url 'EventDetails:customeventdetails' event.pk %}">More Info</a></p>
+{% endif %}
+<br>
+</div>
+</div>
+{% endfor %}
+<div class="eventInfo">
+	<div class="form">
+		<ul id="buttonlist">
+			<li class="buttonelement">
+				<form action="{% url 'dashboard:showMore' search_key page %}" method="post">
+					{% csrf_token %}
+					{% if message %}
+					{{message}}
+					<br>
+					{% endif %}
+					<input type="submit" class="btn btn-primary" value="SHOW MORE" />
+				</form>
+			</li>
+		</ul>
+	</div>
+</div>
+</div>
+
+
+
+{% block elist %}
+{% endblock %}
+
+{% endblock %}

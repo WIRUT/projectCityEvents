@@ -1,0 +1,75 @@
+{% extends 'dashboard/results.html' %}
+
+{% block elist %}
+
+<script type="text/javascript">
+  function addLocationMarkers(map) {
+  var marker, infoWindow, messageText, currLat, currLong;
+  var title = 'location';
+
+  {% for event in events %}
+
+      {% if event.venue.latitude and event.venue.longitude %}
+      currLat = "{{ event.venue.latitude }}";
+      currLong = "{{ event.venue.longitude }}";
+  
+      messageText = "<strong>" + "{{ event.venue.name }}" + "</strong><br>" + "{{ event.venue.address}}" + "<br>";
+      
+      var myLatLng = new google.maps.LatLng(currLat,currLong);
+
+      marker = new google.maps.Marker({
+        position: myLatLng,
+        title: title,
+        map: map,
+        optimized: false,
+      })
+      {% if forloop.counter < 4 %}
+      map.setZoom(6);
+      map.setCenter(marker.getPosition());
+      {% endif %}
+
+      google.maps.event.addListener(marker,'click', function(myLatLng,messageText) {
+        return function(){
+          infoWindow = new google.maps.InfoWindow({
+            position: myLatLng,
+            content: messageText,
+            map: map
+          });
+          }
+      }(myLatLng,messageText));
+      {% elif event.latitude and event.longitude %}
+      currLat = "{{ event.latitude }}";
+      currLong = "{{ event.longitude }}";
+  
+      messageText = "<strong>" + "{{ event.venue_name }}" + "</strong><br>" + "{{ event.address}}" + "<br>";
+      
+      var myLatLng = new google.maps.LatLng(currLat,currLong);
+
+      marker = new google.maps.Marker({
+        position: myLatLng,
+        title: title,
+        map: map,
+        optimized: false,
+      })
+      {% if forloop.counter < 4 %}
+      map.setZoom(6);
+      map.setCenter(marker.getPosition());
+      {% endif %}
+
+      google.maps.event.addListener(marker,'click', function(myLatLng,messageText) {
+        return function(){
+          infoWindow = new google.maps.InfoWindow({
+            position: myLatLng,
+            content: messageText,
+            map: map
+          });
+          }
+      }(myLatLng,messageText));
+      {% endif %}
+
+  {% endfor %}
+  }
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeCn6fLBBK7fFtvfY94UkOtgh73jBnS8o&callback=initMap"></script>
+{% endblock %}

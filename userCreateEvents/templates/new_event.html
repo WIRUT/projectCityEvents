@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+{% block styling %}
+	<script src="{% static 'userCreateEvents/map.js' %}"></script>
+    <style>
+#map {
+    height: 350px; /* must be an absolute pixel value for the map to render with <!DOCTYPE html> in base.html */
+    width: 99%; 
+    border: solid 1px black;
+    margin-left: 0.5%;
+}
+#pac-input.controls {
+margin-top: 10px;
+border: 1px solid transparent;
+border-radius: 2px 0 0 2px;
+box-sizing: border-box;
+-moz-box-sizing: border-box;
+height: 32px;
+outline: none;
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+background-color: #fff;
+font-family: Roboto;
+font-size: 15px;
+font-weight: 300;
+margin-left: 12px;
+padding: 0 11px 0 13px;
+text-overflow: ellipsis;
+width: 300px;
+}
+
+#pac-input:focus {
+border-color: #4d90fe;
+}         
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="container">
+        <div class="row">
+    <h1>New Event</h1>
+    {% crispy form %}
+    <input id="pac-input" class="controls" type="text" placeholder="Address (required)">
+
+
+ </div>
+</div>
+
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeCn6fLBBK7fFtvfY94UkOtgh73jBnS8o&libraries=places&callback=initAutocomplete"></script>
+
+{% endblock %}

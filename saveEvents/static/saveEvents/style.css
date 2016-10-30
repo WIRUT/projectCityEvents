@@ -1,0 +1,30 @@
+.eventInfo {
+	background:rgba(255,255,255,0.9);
+	border: solid 1px black;
+	padding-bottom: 4em;
+}
+.resultsText {
+	margin-left: 135px;
+}
+.eventImage {
+	float: left;
+}
+#results {
+	width: 80%;
+	margin-left: 10%;
+	height: 88%;
+	overflow-y: auto;
+	border: solid 1px black;
+}
+ul {
+	list-style-type: none;
+}
+#buttonlist .buttonelement {
+	display: inline-block;
+}
+.btn-primary {
+	background-color: red;
+}
+.form {
+	float:right;
+}
