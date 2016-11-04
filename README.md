@@ -14,6 +14,9 @@ and on Google Maps.
 It will utilize several API's including Facebook, Google, and
 Eventful.
 
+![Screenshot](https://github.com/WIRUT/projectCityEvents/blob/master/Screen%20Shot%202016-05-16%20at%202.15.24%20PM.png)
+
+
 To Run:
 1. Install VirtualBox (https://www.virtualbox.org)
 
@@ -56,4 +59,5 @@ Sites-> Chosen sites: localhost:8000
 hit save.
 
 You should now be able to login/sign up with Facebook and google on both the navigation bar as well as the login landing page.
+
 
