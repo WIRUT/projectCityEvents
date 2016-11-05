@@ -30,7 +30,7 @@ end
   package "libjpeg-dev"
   
   execute "Installing Django and libraries" do
-      command "sudo pip install django requests django_countries geoip2 django-ipware uwsgi Pillow psycopg2 spotipy django-bootstrap3-datetimepicker django-datetime-widget django-allauth"
+      command "sudo pip install django==1.8 requests django_countries geoip2 django-ipware uwsgi Pillow psycopg2 spotipy django-bootstrap3-datetimepicker django-datetime-widget django-allauth"
       user 'vagrant'
   end
   
