@@ -50,10 +50,10 @@ end
       command 'python manage.py makemigrations eventSearch EventDetails accounts userCreateEvents saveEvents'
   end
 
-execute 'create database' do
-	cwd '/home/vagrant/projectCityEvents/'
-	command 'python manage.py migrate'
-end
+# execute 'create database' do
+# 	cwd '/home/vagrant/projectCityEvents/'
+# 	command 'python manage.py migrate'
+# end
 
 execute 'load fake data' do
 	cwd '/home/vagrant/projectCityEvents/'
@@ -66,24 +66,24 @@ end
  end
  
  # Configuring WSGI 
- cookbook_file "rc.local" do
-     path "/etc/rc.local"
- end
+ # cookbook_file "rc.local" do
+ #     path "/etc/rc.local"
+ # end
  
- execute "Converting rc.local to be OS agnostic" do
-     command 'sudo dos2unix /etc/rc.local /home/vagrant/projectCityEvents/restart.sh'
- end
+ # execute "Converting rc.local to be OS agnostic" do
+ #     command 'sudo dos2unix /etc/rc.local /home/vagrant/projectCityEvents/restart.sh'
+ # end
  
- execute "Starting WSGI process" do
-     command '/etc/rc.local'
- end
+ # execute "Starting WSGI process" do
+ #     command '/etc/rc.local'
+ # end
  
  # Configuring Webserver
- cookbook_file "nginx-default" do
-     path "/etc/nginx/sites-available/default"
- end
+ # cookbook_file "nginx-default" do
+ #     path "/etc/nginx/sites-available/default"
+ # end
  
- service "nginx" do
-     action :restart
- end
+ # service "nginx" do
+ #     action :restart
+ # end
 
