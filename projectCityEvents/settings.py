@@ -24,7 +24,7 @@ GEOIP_PATH = os.path.join(BASE_DIR, 'geodata')
 SECRET_KEY = 'pmnn!v4%go4d-_ao7)&h9wrng%04t3p6o&&cqyrugpjm2ce%au'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False 
+DEBUG = True 
 
 ALLOWED_HOSTS = ['*']
 
